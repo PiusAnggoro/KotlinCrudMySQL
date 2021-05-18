@@ -19,6 +19,7 @@ import com.jacksonandroidnetworking.JacksonParserFactory
 class MainActivity : AppCompatActivity() {
 
     var arrayList = ArrayList<StudentsModel>()
+    private lateinit var rvStudents: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +29,19 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Data Mahasiswa"
 
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        rvStudents = findViewById(R.id.mRecyclerView)
+        rvStudents.setHasFixedSize(true)
+        showRecyclerList()
 
         mFloatingActionButton.setOnClickListener {
             startActivity(Intent(this, StudentCrudActivity::class.java))
         }
+    }
+
+    private fun showRecyclerList() {
+        rvStudents.layoutManager = LinearLayoutManager(this)
+        val studentsAdapter = StudentsAdapter(applicationContext, arrayList)
+        rvStudents.adapter = studentsAdapter
     }
 
     override fun onResume() {
@@ -80,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onError(anError: ANError?) {
                         loading.dismiss()
                         Log.e("ONERROR", anError?.errorDetail?.toString())
-                        Toast.makeText(applicationContext, "Connection Failure", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Connection Failure1", Toast.LENGTH_SHORT).show()
                     }
                 })
     }

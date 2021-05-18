@@ -2,10 +2,12 @@ package com.piusanggoro.simplecrud
 
 import android.content.Context
 import android.content.Intent
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.student_list.view.*
 
 class StudentsAdapter(private val context: Context, private val arrayList: ArrayList<StudentsModel>) : RecyclerView.Adapter<StudentsAdapter.Holder>() {
@@ -17,21 +19,29 @@ class StudentsAdapter(private val context: Context, private val arrayList: Array
     override fun getItemCount(): Int = arrayList!!.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.view.lbNimList.text = arrayList?.get(position)?.nim
-        holder.view.lbNameList.text = "Nama : "+arrayList?.get(position)?.name
-        holder.view.lbAddressList.text = "Alamat : "+arrayList?.get(position)?.address
-        holder.view.lbGenderList.text = "Gender : "+arrayList?.get(position)?.gender
+        val students = arrayList[position]
+        holder.nim.text = students.nim
+        holder.nama.text = "Nama : "+students.name
+        holder.address.text = "Alamat : "+students.address
+        holder.gender.text = "Gender : "+students.gender
 
-        holder.view.cvList.setOnClickListener {
+        holder.list.setOnClickListener {
             val i = Intent(context,StudentCrudActivity::class.java)
             i.putExtra("editmode","1")
-            i.putExtra("nim",arrayList?.get(position)?.nim)
-            i.putExtra("name",arrayList?.get(position)?.name)
-            i.putExtra("address",arrayList?.get(position)?.address)
-            i.putExtra("gender",arrayList?.get(position)?.gender)
+            i.putExtra("nim",students.nim)
+            i.putExtra("name",students.name)
+            i.putExtra("address",students.address)
+            i.putExtra("gender",students.gender)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(i)
         }
     }
 
-    inner class Holder(val view:View) : RecyclerView.ViewHolder(view)
+    inner class Holder(val view:View) : RecyclerView.ViewHolder(view){
+        var nim: TextView = view.findViewById(R.id.lbNimList)
+        var nama: TextView = view.findViewById(R.id.lbNameList)
+        var address: TextView = view.findViewById(R.id.lbAddressList)
+        var gender: TextView = view.findViewById(R.id.lbGenderList)
+        var list: CardView = view.findViewById(R.id.cvList)
+    }
 }
