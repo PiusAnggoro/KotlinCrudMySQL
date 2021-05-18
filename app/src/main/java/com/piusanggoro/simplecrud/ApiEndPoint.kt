@@ -2,8 +2,7 @@ package com.piusanggoro.simplecrud
 
 class ApiEndPoint {
     companion object {
-        //private val SERVER = "http://192.168.212.245/simplecrud/"
-        private val SERVER = "http://belajar-unggah.000webhostapp.com/simplecrud/"
+        private val SERVER = "http://192.168.42.178/simplecrud/"
         val CREATE = SERVER+"create.php"
         val READ = SERVER+"read.php"
         val DELETE = SERVER+"delete.php"
